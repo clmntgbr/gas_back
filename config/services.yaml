@@ -8,6 +8,11 @@ parameters:
     googleApiKey: "%env(GOOGLE_API_KEY)%"
     placeTextsearchUrl: "%env(PLACE_TEXTSEARCH_URL)%"
     placeDetailsUrl: "%env(PLACE_DETAILS_URL)%"
+    latitudeDefault: "%env(LATITUDE_DEFAULT)%"
+    longitudeDefault: "%env(LONGITUDE_DEFAULT)%"
+    radiusDefault: "%env(RADIUS_DEFAULT)%"
+    gasTypeUuidDefault: "%env(GAS_TYPE_UUID_DEFAULT)%"
+    gasLimitDefault: "%env(GAS_LIMIT_DEFAULT)%"
 
 services:
     _defaults:
@@ -23,6 +28,11 @@ services:
             string $googleApiKey: "%googleApiKey%"
             string $placeTextsearchUrl: "%placeTextsearchUrl%"
             string $placeDetailsUrl: "%placeDetailsUrl%"
+            string $latitudeDefault: "%latitudeDefault%"
+            string $longitudeDefault: "%longitudeDefault%"
+            string $radiusDefault: "%radiusDefault%"
+            string $gasTypeUuidDefault: "%gasTypeUuidDefault%"
+            string $gasLimitDefault: "%gasLimitDefault%"
 
     App\:
         resource: "../src/"

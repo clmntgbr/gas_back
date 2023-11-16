@@ -82,4 +82,6 @@ COPY config config
 COPY migrations migrations
 COPY src src
 
+CMD chmod -R 777 public/images
+
 ENTRYPOINT ["php-fpm"]

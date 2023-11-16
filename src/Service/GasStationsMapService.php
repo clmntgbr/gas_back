@@ -7,7 +7,7 @@ use App\Entity\GasStation;
 final class GasStationsMapService
 {
     public function __construct(
-        private array $lowGasPrices = []
+        private array $lowGasPricesGasStationKey = ['keys' => [], 'gasPrice' => null, 'gasPriceId' => null],
     ) {
     }
 
@@ -15,47 +15,31 @@ final class GasStationsMapService
     public function invoke($gasStations, string $gasTypeUuid)
     {
         foreach ($gasStations as $key => $gasStation) {
-            foreach ($gasStation->getLastGasPrices() as $gasPriceKey => $gasPrice) {
-                if (array_key_exists('gasTypeUuid', $gasPrice) && $gasPrice['gasTypeUuid'] !== $gasTypeUuid) {
-                    continue;
-                }
+            if (!array_key_exists($gasTypeUuid, $gasStation->getLastGasPrices())) {
+                continue;
+            }
 
-                if (!array_key_exists($key, $this->lowGasPrices)) {
-                    $this->updateLowGasPrices($gasStation, $key, $gasPriceKey, $gasPrice);
-                    continue;
-                }
-                if (array_key_exists('gasPriceValue', $gasPrice) && array_key_exists('gasPriceValue', $this->lowGasPrices[$key]) && $gasPrice['gasPriceValue'] <= $this->lowGasPrices[$key]['gasPriceValue']) {
-                    $this->updateLowGasPrices($gasStation, $key, $gasPriceKey, $gasPrice);
-                    continue;
-                }
+            $gasPrice = $gasStation->getLastGasPrices()[$gasTypeUuid];
+
+            if (empty($this->lowGasPricesGasStationKey['keys'])) {
+                $this->lowGasPricesGasStationKey = ['keys' => [$key], 'gasPrice' => $gasPrice['gasPriceValue']];
+                continue;
+            }
+
+            if ($this->lowGasPricesGasStationKey['gasPrice'] > $gasPrice['gasPriceValue']) {
+                $this->lowGasPricesGasStationKey = ['keys' => [$key], 'gasPrice' => $gasPrice['gasPriceValue']];
+                continue;
+            }
+
+            if ($this->lowGasPricesGasStationKey['gasPrice'] == $gasPrice['gasPriceValue']) {
+                array_push($this->lowGasPricesGasStationKey['keys'], $key);
             }
         }
 
-        foreach ($this->lowGasPrices as $key => $lowGasPrice) {
-            $gasStation = $gasStations[$lowGasPrice['gasStationIndex']];
-            $gasStation->setHasLowPrices(true);
-
-            $lastGasPrices = $gasStation->getLastGasPrices();
-
-            if (array_key_exists($key, $lastGasPrices)) {
-                $prices = $lastGasPrices[$key];
-                $prices['isLowPrice'] = true;
-                $lastGasPrices[$key] = $prices;
-                $gasStation->addLastGasPrices($lastGasPrices);
-            }
-
-            $gasStations[$lowGasPrice['gasStationIndex']] = $gasStation;
+        foreach ($this->lowGasPricesGasStationKey['keys'] as $value) {
+            $gasStations[$value]->setHasLowPrices(true);
         }
 
         return $gasStations;
-    }
-
-    private function updateLowGasPrices(GasStation $gasStation, int $key, string $gasPriceKey, array $gasPrice)
-    {
-        $this->lowGasPrices[$gasPriceKey] = [
-            'id' => $gasPrice['gasPriceId'],
-            'gasStationId' => $gasStation->getGasStationId(),
-            'gasStationIndex' => $key,
-        ];
     }
 }

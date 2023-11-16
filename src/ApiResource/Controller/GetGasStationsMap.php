@@ -15,21 +15,26 @@ class GetGasStationsMap extends AbstractController
 
     public function __construct(
         private readonly GasStationRepository $gasStationRepository,
-        private readonly GasStationsMapService $gasStationsMapService
+        private readonly GasStationsMapService $gasStationsMapService,
+        private readonly string $latitudeDefault,
+        private readonly string $longitudeDefault,
+        private readonly string $radiusDefault,
+        private readonly string $gasTypeUuidDefault,
+        private readonly string $gasLimitDefault
     ) {
     }
 
     public function __invoke(Request $request)
     {
-        $latitude = $request->query->get('latitude') ?? 48.764977;
-        $longitude = $request->query->get('longitude') ?? 2.358192;
-        $radius = $request->query->get('radius') ?? 500000;
-        $gasTypeUuid = $request->query->get('gasTypeUuid') ?? '1';
+        $latitude = $request->query->get('latitude') ?? $this->latitudeDefault;
+        $longitude = $request->query->get('longitude') ?? $this->longitudeDefault;
+        $limit = $request->query->get('limit') ?? $this->gasLimitDefault;
+        $radius = $request->query->get('radius') ?? $this->radiusDefault;
+        $gasTypeUuid = $request->query->get('gasTypeUuid') ?? $this->gasTypeUuidDefault;
         $filterCity = $request->query->get('filter_city') ?? null;
         $filterDepartment = $request->query->get('filter_department') ?? null;
 
-        $gasStations = $this->gasStationRepository->getGasStationsMap($longitude, $latitude, $radius, $gasTypeUuid, $filterCity, $filterDepartment);
-
+        $gasStations = $this->gasStationRepository->getGasStationsMap($longitude, $latitude, $radius, $gasTypeUuid, $limit, $filterCity, $filterDepartment);
         return $this->gasStationsMapService->invoke($gasStations, $gasTypeUuid);
     }
 }

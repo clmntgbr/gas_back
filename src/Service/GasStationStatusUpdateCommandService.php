@@ -26,9 +26,9 @@ class GasStationStatusUpdateCommandService
     ) {
     }
 
-    public function invoke(): void
+    public function invoke(array $gasStationIds): void
     {
-        $gasStations = $this->gasStationRepository->findAll();
+        $gasStations = $this->getGasStations($gasStationIds);
 
         foreach ($gasStations as $gasStation) {
             match ($gasStation->getStatus()) {
@@ -47,6 +47,15 @@ class GasStationStatusUpdateCommandService
                 default => '',
             };
         }
+    }
+
+    private function getGasStations(array $gasStationIds)
+    {
+        if (empty($gasStationIds)) {
+            return $this->gasStationRepository->findAll();
+        }
+
+        return $this->gasStationRepository->findGasStationByIds($gasStationIds);
     }
 
     private function created(GasStation $gasStation): void
