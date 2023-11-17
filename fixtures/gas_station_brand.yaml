@@ -7,8 +7,8 @@ App\Entity\GasStationBrand:
     image.mimeType: "image/png"
     image.size: "41586"
     image.dimensions: ["428", "583"]
-    imageLow.name: "64ce39fc8c5f6037948182.png"
-    imageLow.originalName: "64ce39fc8c5f6037948182.png"
+    imageLow.name: "6557bf1bab8a3701442462.png"
+    imageLow.originalName: "6557bfe2538a0997536713.png"
     imageLow.mimeType: "image/png"
     imageLow.size: "39654"
     imageLow.dimensions: ["428", "583"]
