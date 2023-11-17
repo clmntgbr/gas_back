@@ -19,20 +19,22 @@ class GetGasStationsMap extends AbstractController
         private readonly string $latitudeDefault,
         private readonly string $longitudeDefault,
         private readonly string $radiusDefault,
-        private readonly string $gasTypeUuidDefault
+        private readonly string $gasTypeUuidDefault,
+        private readonly string $zoomDefault
     ) {
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): array
     {
         $latitude = $request->query->get('latitude') ?? $this->latitudeDefault;
         $longitude = $request->query->get('longitude') ?? $this->longitudeDefault;
         $radius = $request->query->get('radius') ?? $this->radiusDefault;
+        $zoom = $request->query->get('zoom') ?? $this->zoomDefault;
         $gasTypeUuid = $request->query->get('gasTypeUuid') ?? $this->gasTypeUuidDefault;
         $filterCity = $request->query->get('filter_city') ?? null;
         $filterDepartment = $request->query->get('filter_department') ?? null;
 
-        $gasStations = $this->gasStationRepository->getGasStationsMap($longitude, $latitude, $radius, $gasTypeUuid, $filterCity, $filterDepartment);
+        $gasStations = $this->gasStationRepository->getGasStationsMap($longitude, $latitude, $radius, $gasTypeUuid, $this->gasStationsMapService->getLimitByZoom($zoom), $filterCity, $filterDepartment);
         return $this->gasStationsMapService->invoke($gasStations, $gasTypeUuid);
     }
 }

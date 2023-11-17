@@ -12,7 +12,7 @@ final class GasStationsMapService
     }
 
     /** @param GasStation[] $gasStations */
-    public function invoke($gasStations, string $gasTypeUuid)
+    public function invoke(array $gasStations, string $gasTypeUuid): array
     {
         foreach ($gasStations as $key => $gasStation) {
             if (!array_key_exists($gasTypeUuid, $gasStation->getLastGasPrices())) {
@@ -32,7 +32,7 @@ final class GasStationsMapService
             }
 
             if ($this->lowGasPricesGasStationKey['gasPrice'] == $gasPrice['gasPriceValue']) {
-                array_push($this->lowGasPricesGasStationKey['keys'], $key);
+                $this->lowGasPricesGasStationKey['keys'][] = $key;
             }
         }
 
@@ -41,5 +41,18 @@ final class GasStationsMapService
         }
 
         return $gasStations;
+    }
+
+    public function getLimitByZoom(string $zoom): int
+    {
+        match ($zoom) {
+            "22", "21", "20" => $limit = 5,
+            "19", "18", "17" => $limit = 10,
+            "16", "15", "14" => $limit = 15,
+            "13" => $limit = 25,
+            default => $limit = 50,
+        };
+
+        return $limit;
     }
 }
