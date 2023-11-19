@@ -50,7 +50,9 @@ final class GasStationsMapService
             "19", "18", "17" => $limit = 10,
             "16", "15", "14" => $limit = 15,
             "13" => $limit = 25,
-            default => $limit = 50,
+            "12" => $limit = 50,
+            "11" => $limit = 75,
+            default => $limit = 100,
         };
 
         return $limit;

@@ -51,7 +51,7 @@ class GasStationBrandCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnIndex()->setDisabled(),
             TextField::new('uuid')->setDisabled(),
-            TextField::new('reference')->hideOnIndex()->setDisabled(),
+            TextField::new('reference')->hideOnIndex(),
             TextField::new('name'),
 
             FormField::addPanel('Image'),

@@ -57,6 +57,7 @@ class GasStationCrudController extends AbstractCrudController
         return $filters
             ->add('gasStationId')
             ->add('pop')
+            ->add('name')
             ->add(GasStationStatusFilter::new('status'))
             ->add(TextFilter::new('address'))
             ->add(DateTimeFilter::new('createdAt'))

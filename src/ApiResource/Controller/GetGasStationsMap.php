@@ -18,7 +18,6 @@ class GetGasStationsMap extends AbstractController
         private readonly GasStationsMapService $gasStationsMapService,
         private readonly string $latitudeDefault,
         private readonly string $longitudeDefault,
-        private readonly string $radiusDefault,
         private readonly string $gasTypeUuidDefault,
         private readonly string $zoomDefault
     ) {
