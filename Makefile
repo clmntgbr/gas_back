@@ -50,7 +50,7 @@ start:
 
 ## Stop containers
 stop:
-	@$(DOCKER_COMPOSE) down
+	@$(DOCKER_COMPOSE) down --remove-orphans
 
 restart: stop start
 
