@@ -53,6 +53,7 @@ security:
      - { path: ^/logout, roles: PUBLIC_ACCESS }
      - { path: ^/admin, roles: ROLE_USER }
      - { path: ^/api/gas_stations/*, roles: PUBLIC_ACCESS, methods: [GET] }
+     - { path: ^/api/gas_types, roles: PUBLIC_ACCESS, methods: [GET] }
      - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [POST] }
      - { path: ^/api/docs, roles: PUBLIC_ACCESS }
      - { path: ^/api/authenticate, roles: PUBLIC_ACCESS }

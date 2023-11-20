@@ -28,7 +28,7 @@ class GetGasStationsMap extends AbstractController
         $latitude = $request->query->get('latitude') ?? $this->latitudeDefault;
         $longitude = $request->query->get('longitude') ?? $this->longitudeDefault;
         $zoom = $request->query->get('zoom') ?? $this->zoomDefault;
-        $gasTypeUuid = $request->query->get('gasTypeUuid') ?? $this->gasTypeUuidDefault;
+        $gasTypeUuid = $request->query->get('gas_type_uuid') ?? $this->gasTypeUuidDefault;
         $filterCity = $request->query->get('filter_city') ?? null;
         $filterDepartment = $request->query->get('filter_department') ?? null;
 
