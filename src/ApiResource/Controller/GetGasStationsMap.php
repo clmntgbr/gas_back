@@ -32,7 +32,7 @@ class GetGasStationsMap extends AbstractController
         $filterCity = $request->query->get('filter_city') ?? null;
         $filterDepartment = $request->query->get('filter_department') ?? null;
 
-        $gasStations = $this->gasStationRepository->getGasStationsMap($longitude, $latitude, $gasTypeUuid, $radius, $filterCity, $filterDepartment);
+        $gasStations = $this->gasStationRepository->getGasStationsMap($longitude, $latitude, $gasTypeUuid, $radius/2, $filterCity, $filterDepartment);
         return $this->gasStationsMapService->invoke($gasStations, $gasTypeUuid);
     }
 }
