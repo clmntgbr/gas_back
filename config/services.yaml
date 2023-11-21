@@ -12,7 +12,6 @@ parameters:
     longitudeDefault: "%env(LONGITUDE_DEFAULT)%"
     radiusDefault: "%env(RADIUS_DEFAULT)%"
     gasTypeUuidDefault: "%env(GAS_TYPE_UUID_DEFAULT)%"
-    zoomDefault: "%env(ZOOM_DEFAULT)%"
 
 services:
     _defaults:
@@ -32,7 +31,6 @@ services:
             string $longitudeDefault: "%longitudeDefault%"
             string $radiusDefault: "%radiusDefault%"
             string $gasTypeUuidDefault: "%gasTypeUuidDefault%"
-            string $zoomDefault: "%zoomDefault%"
 
     App\:
         resource: "../src/"

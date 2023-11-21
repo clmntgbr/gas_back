@@ -69,7 +69,7 @@ class GasStationRepository extends ServiceEntityRepository
     }
 
     /** @return GasStation[] */
-    public function getGasStationsMap(string $longitude, string $latitude, string $gasTypeUuid, string $limit, ?string $filterCity, ?string $filterDepartment)
+    public function getGasStationsMap(string $longitude, string $latitude, string $gasTypeUuid, string $radius, ?string $filterCity, ?string $filterDepartment)
     {
         $gasTypeFilter = $this->createGasTypeFilter($gasTypeUuid);
         $cityFilter = $this->createGasStationsCitiesFilter($filterCity);
@@ -89,7 +89,8 @@ class GasStationRepository extends ServiceEntityRepository
                     FROM gas_station s 
                     INNER JOIN address a ON s.address_id = a.id
                     WHERE a.longitude IS NOT NULL AND a.latitude IS NOT NULL $gasTypeFilter $cityFilter $departmentFilter
-                    ORDER BY `distance` ASC LIMIT $limit;
+                    HAVING `distance` < $radius
+                    ORDER BY `distance` ASC LIMIT 100;
         ";
 
         $statement = $this->getEntityManager()->getConnection()->prepare($query);
