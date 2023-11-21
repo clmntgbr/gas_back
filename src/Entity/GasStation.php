@@ -111,13 +111,13 @@ class GasStation
     private ?array $previousGasPrices;
 
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
-    private int $maxRetryPositionStack = 0;
+    private int $maxRetryPositionStack;
 
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
-    private int $maxRetryTextSearch = 0;
+    private int $maxRetryTextSearch;
 
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
-    private int $maxRetryPlaceDetails = 0;
+    private int $maxRetryPlaceDetails;
 
     #[Groups(['get_gas_stations'])]
     private bool $hasLowPrices = false;

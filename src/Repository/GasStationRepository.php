@@ -77,7 +77,7 @@ class GasStationRepository extends ServiceEntityRepository
 
         $query = "  SELECT 
                     s.id, 
-                    (SQRT(POW(69.1 * (a.latitude - $latitude), 2) + POW(69.1 * ($longitude - a.longitude) * COS(a.latitude / 57.3), 2))*1000) as distance,
+                    ((6371 * acos(cos(radians($latitude)) * cos(radians(a.latitude)) * cos(radians(a.longitude) - radians($longitude)) + sin(radians($latitude)) * sin(radians(a.latitude))))*1000) as distance,
                     
                     JSON_KEYS(s.last_gas_prices) as gas_types,
                     
@@ -90,7 +90,7 @@ class GasStationRepository extends ServiceEntityRepository
                     INNER JOIN address a ON s.address_id = a.id
                     WHERE a.longitude IS NOT NULL AND a.latitude IS NOT NULL $gasTypeFilter $cityFilter $departmentFilter
                     HAVING `distance` < $radius
-                    ORDER BY `distance` ASC LIMIT 100;
+                    ORDER BY `distance`;
         ";
 
         $statement = $this->getEntityManager()->getConnection()->prepare($query);
