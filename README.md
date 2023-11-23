@@ -1,6 +1,7 @@
 # Gas BackEnd Project
 
-its the backend part for the Gas project, who collect all gas price from Gas station in France
+this is the backend part of the Gas Project, who collect all price from gas stations in France
+
 ## Getting Started
 
 1. Clone https://github.com/clmntgbr/setup and run `make build start` for the setup project
@@ -12,17 +13,13 @@ its the backend part for the Gas project, who collect all gas price from Gas sta
 
 ## Overview
 
-Open `https://traefik.traefik.me/dashboard/#/` in your favorite web browser for traefik dashboard
+Open `https://traefik.traefik.me/dashboard/#/` in your browser for traefik dashboard
 
-Open `https://maildev.traefik.me` in your favorite web browser for maildev
+Open `https://maildev.traefik.me` in your browser for maildev
 
-Open `https://rabbitmq.traefik.me` in your favorite web browser for rabbitmq
+Open `https://rabbitmq.traefik.me` in your browser for rabbitmq
 
-Open `https://back.traefik.me` in your favorite web browser for symfony app
-
-Open `https://back.traefik.me/admin` for the admin part
-
-Open `https://front.traefik.me` in your favorite web browser for tye front app
+Open `https://back.traefik.me/admin` in your browser for the admin & api part
 
 ## Commands
 
@@ -41,7 +38,6 @@ Open `https://front.traefik.me` in your favorite web browser for tye front app
 * MailDev
 * Traefik latest
 * Symfony 6.2
-* Next.js
 * Docker
 
 **Enjoy!**
