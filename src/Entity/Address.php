@@ -45,7 +45,7 @@ class Address
     use BlameableEntity;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    #[Groups(['get_gas_stations', 'get_gas_station'])]
+    #[Groups(['get_gas_station'])]
     private ?string $vicinity = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
@@ -61,7 +61,7 @@ class Address
     private ?string $city;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    #[Groups(['get_gas_stations', 'get_addresses', 'get_gas_station'])]
+    #[Groups(['get_addresses', 'get_gas_station'])]
     private ?string $region = null;
 
     #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
@@ -69,7 +69,7 @@ class Address
     private ?string $postalCode;
 
     #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
-    #[Groups(['get_gas_stations', 'get_gas_station'])]
+    #[Groups(['get_gas_station'])]
     private ?string $country;
 
     #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]

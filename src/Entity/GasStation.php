@@ -45,7 +45,7 @@ class GasStation
     use BlameableEntity;
 
     #[ORM\Column(type: Types::STRING, length: 10)]
-    #[Groups(['get_gas_stations', 'get_gas_station'])]
+    #[Groups(['get_gas_station'])]
     private string $pop;
 
     #[ORM\Column(type: Types::STRING, length: 20)]
@@ -64,11 +64,10 @@ class GasStation
     private ?string $status;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
-    #[Groups(['get_gas_stations'])]
     private bool $hasGasStationBrandVerified = false;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    #[Groups(['get_gas_stations', 'get_gas_station'])]
+    #[Groups(['get_gas_station'])]
     private ?\DateTimeImmutable $closedAt = null;
 
     #[ORM\OneToOne(targetEntity: Address::class, cascade: ['persist', 'remove'])]
@@ -94,7 +93,7 @@ class GasStation
     private ?string $hash;
 
     #[ORM\ManyToOne(targetEntity: GasStationBrand::class, cascade: ['persist'], fetch: 'LAZY')]
-    #[Groups(['get_gas_stations', 'get_gas_station'])]
+    #[Groups(['get_gas_station'])]
     private GasStationBrand $gasStationBrand;
 
     #[ORM\OneToMany(mappedBy: 'gasStation', targetEntity: GasPrice::class, cascade: ['persist', 'remove'], fetch: 'LAZY')]
@@ -153,7 +152,7 @@ class GasStation
         return array_combine(array_slice([0, 1, 2, 3, 4, 5], 0, count($this->lastGasPrices)), $this->lastGasPrices);
     }
 
-    #[Groups(['get_gas_stations', 'get_gas_station'])]
+    #[Groups(['get_gas_station'])]
     public function getPreviousPrices(): array
     {
         return array_combine(array_slice([0, 1, 2, 3, 4, 5], 0, count($this->previousGasPrices)), $this->previousGasPrices);

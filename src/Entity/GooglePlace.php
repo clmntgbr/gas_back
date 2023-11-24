@@ -53,7 +53,7 @@ class GooglePlace
     private ?string $googleRating = null;
 
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
-    #[Groups(['get_gas_station'])]
+    #[Groups(['get_gas_station', 'get_gas_stations'])]
     private ?string $rating = null;
 
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
