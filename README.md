@@ -5,7 +5,7 @@ this is the backend part of the Gas Project, who collect all price from gas stat
 ## Getting Started
 
 1. Clone https://github.com/clmntgbr/setup and follow instructions
-2. Clone [this repo](https://github.com/clmntgbr/gas_back)
+2. Clone https://github.com/clmntgbr/gas_back
 3. Run `cp .env.dist .env` and change some variable
 4. Run `make build start` to start docker
 5. Run `make init` to initialize the project
