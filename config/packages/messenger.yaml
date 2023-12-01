@@ -72,3 +72,4 @@ framework:
             App\Message\CreateGooglePlaceTextsearchMessage: async_priority_medium
             App\Message\CreateGooglePlaceAnomalyMessage: async_priority_high
             App\Message\CreateGooglePlaceDetailsMessage: async_priority_high
+            App\Message\UpdateGasStationClosedMessage: async_priority_high

@@ -33,6 +33,29 @@ class GasStationRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
+    public function findGasStationsByStatus(string $status): array
+    {
+        $query = $this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.status = :status')
+            ->setParameter('status', $status)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /** @return GasStation[] */
+    public function findGasStationsExceptByStatus(string $status)
+    {
+        $query = $this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.status != :status')
+            ->setParameter('status', $status)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     /** @return GasStation[] */
     public function findGasStationByIds(array $gasStationIds)
     {
