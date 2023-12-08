@@ -137,7 +137,6 @@ class GasStationCrudController extends AbstractCrudController
                 ->setColumns('col-sm-6 col-lg-6 col-xxl-3'),
             FormField::addRow(),
             TextField::new('googlePlace.placeId')
-                ->hideOnIndex()
                 ->setLabel('PlaceId')
                 ->setColumns('col-sm-6 col-lg-6 col-xxl-3'),
             TextField::new('googlePlace.googleId')

@@ -82,8 +82,8 @@ class GasStationRepository extends ServiceEntityRepository
     public function findRandomGasStation(): ?GasStation
     {
         $query = $this->createQueryBuilder('p')
-            ->where('p.status = :status')
-            ->setParameter('status', GasStationStatusReference::WAITING_VALIDATION)
+            ->where('p.status IN (:status)')
+            ->setParameter('status',[GasStationStatusReference::WAITING_VALIDATION, GasStationStatusReference::PLACE_ID_ANOMALY])
             ->orderBy('RAND()')
             ->setMaxResults(1)
             ->getQuery();

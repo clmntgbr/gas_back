@@ -39,7 +39,7 @@ class GasPriceUpdateCommandService
         foreach ($data as $datum) {
             $gasStationId = $this->gasStationService->getGasStationId($datum['@attributes']['id']);
 
-            if (!in_array(substr($gasStationId->getId(), 0, 2), ['94', '75', '92', '91', '93', '95', '77'])) { // for dev only
+            if (!in_array(substr($gasStationId->getId(), 0, 2), ['94', '75'])) { // for dev only
                 continue;
             }
 
