@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Entity\EntityId\GasStationId;
+use App\Entity\GasStation;
 use App\Lists\GasStationStatusReference;
 use App\Message\CreateGooglePlaceDetailsMessage;
 use App\Message\CreateGooglePlaceTextsearchMessage;
@@ -57,6 +58,12 @@ final class CreateGooglePlaceTextsearchMessageHandler
 
         if (null === $response) {
             return $this->gasStationService->setGasStationStatus($gasStation, GasStationStatusReference::NOT_FOUND_IN_TEXTSEARCH);
+        }
+
+        $gasStationPlaceId = $this->gasStationRepository->findGasStationByPlaceIdAndStatus($response['place_id'], GasStationStatusReference::OPEN);
+
+        if ($gasStationPlaceId instanceof GasStation) {
+            return $this->gasStationService->setGasStationStatus($gasStation, GasStationStatusReference::PLACE_ID_ALREADY_FOUND);
         }
 
         $gasStation->getGooglePlace()->setPlaceId($response);

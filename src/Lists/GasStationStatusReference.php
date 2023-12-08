@@ -23,6 +23,7 @@ class GasStationStatusReference
     public const NOT_FOUND_IN_DETAILS = 'not_found_in_details';
 
     public const PLACE_ID_ANOMALY = 'place_id_anomaly';
+    public const PLACE_ID_ALREADY_FOUND = 'place_id_already_found';
 
     public const WAITING_VALIDATION = 'waiting_validation';
     public const VALIDATION_REJECTED = 'validation_rejected';

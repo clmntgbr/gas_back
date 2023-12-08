@@ -79,6 +79,20 @@ class GasStationRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findGasStationByPlaceIdAndStatus(string $placeId, string $status): array
+    {
+        $query = $this->createQueryBuilder('s')
+            ->select('s')
+            ->innerJoin('s.googlePlace', 'ss')
+            ->where('ss.placeId = :placeId AND s.status = :status')
+            ->setParameters(
+               ['status' => $status, 'placeId' => $placeId] 
+            )
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findRandomGasStation(): ?GasStation
     {
         $query = $this->createQueryBuilder('p')

@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler;
 
+use App\Entity\GasStation;
 use App\Lists\GasStationStatusReference;
 use App\Message\CreateGooglePlaceDetailsMessage;
 use App\Repository\GasStationRepository;
@@ -53,6 +54,12 @@ final class CreateGooglePlaceDetailsMessageHandler
 
         if (null === $response) {
             return $this->gasStationService->setGasStationStatus($gasStation, GasStationStatusReference::NOT_FOUND_IN_DETAILS);
+        }
+
+        $gasStationPlaceId = $this->gasStationRepository->findGasStationByPlaceIdAndStatus($response['place_id'], GasStationStatusReference::OPEN);
+        
+        if ($gasStationPlaceId instanceof GasStation) {
+            return $this->gasStationService->setGasStationStatus($gasStation, GasStationStatusReference::PLACE_ID_ALREADY_FOUND);
         }
 
         $gasStation->setName(htmlspecialchars_decode(ucwords(strtolower(trim($response['name'] ?? null)))));
