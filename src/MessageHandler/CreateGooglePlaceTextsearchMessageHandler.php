@@ -60,7 +60,7 @@ final class CreateGooglePlaceTextsearchMessageHandler
             return $this->gasStationService->setGasStationStatus($gasStation, GasStationStatusReference::NOT_FOUND_IN_TEXTSEARCH);
         }
 
-        $gasStationPlaceId = $this->gasStationRepository->findGasStationByPlaceIdAndStatus($response['place_id'], GasStationStatusReference::OPEN);
+        $gasStationPlaceId = $this->gasStationRepository->findGasStationByPlaceIdAndStatus($response, GasStationStatusReference::OPEN);
 
         if ($gasStationPlaceId instanceof GasStation) {
             return $this->gasStationService->setGasStationStatus($gasStation, GasStationStatusReference::PLACE_ID_ALREADY_FOUND);

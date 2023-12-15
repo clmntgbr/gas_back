@@ -14,7 +14,7 @@ class GasStationStatusAnomalyCommandService
 
     public function invoke(): void
     {
-        $gasStations = $this->gasStationRepository->findGasStationsByPlaceId();
+        $gasStations = $this->gasStationRepository->findGasStationsByPlaceIdNotNull();
 
         foreach ($gasStations as $gasStation) {
             $gasStationsAnomalies = $this->gasStationRepository->getGasStationGooglePlaceByPlaceId($gasStation);

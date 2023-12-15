@@ -80,7 +80,7 @@ class GasStationCrudController extends AbstractCrudController
 
         return [
             FormField::addPanel('Gas Station Details'),
-            IdField::new('gasStationId')
+            TextField::new('gasStationId')
                 ->setDisabled()
                 ->setColumns('col-sm-12 col-lg-12 col-xxl-12'),
             TextField::new('hash')
@@ -383,11 +383,14 @@ class GasStationCrudController extends AbstractCrudController
 
             FormField::addPanel('Max Retry'),
             Field::new('maxRetryPositionStack')
-                ->setDisabled(),
+                ->setDisabled()
+                ->hideOnIndex(),
             Field::new('maxRetryTextSearch')
-                ->setDisabled(),
+                ->setDisabled()
+                ->hideOnIndex(),
             Field::new('maxRetryPlaceDetails')
-                ->setDisabled(),
+                ->setDisabled()
+                ->hideOnIndex(),
 
             FormField::addPanel('Json fields'),
             CodeEditorField::new('elementAdmin')

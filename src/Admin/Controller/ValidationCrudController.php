@@ -49,7 +49,7 @@ class ValidationCrudController extends AbstractController
     }
 
     #[Route('/admin/validation/validate/{gasStationId}', name: 'app_admin_validation_validate')]
-    public function validate(EntityManagerInterface $em, GasStation $gasStation): Response
+    public function validate(EntityManagerInterface $em, GasStation $gasStation, GasStationRepository $gasStationRepository): Response
     {
         // if (GasStationStatusReference::WAITING_VALIDATION !== $gasStation->getStatus()) {
         //     return $this->redirect('/admin?routeName=app_admin_validation');
@@ -57,6 +57,13 @@ class ValidationCrudController extends AbstractController
 
         $gasStation->setStatus(GasStationStatusReference::VALIDATED);
         $gasStation->setStatus(GasStationStatusReference::OPEN);
+
+        $gasStations = $gasStationRepository->getGasStationGooglePlaceByPlaceId($gasStation);
+        foreach($gasStations as $entity) {
+            $entity->setStatus(GasStationStatusReference::VALIDATION_REJECTED);
+            $entity->getGooglePlace()->setPlaceId(NULL);
+            $em->persist($entity);
+        }
 
         $em->persist($gasStation);
         $em->flush();
@@ -100,6 +107,22 @@ class ValidationCrudController extends AbstractController
         $messageBus->dispatch(
             new CreateGooglePlaceDetailsMessage(new GasStationId($gasStation->getGasStationId()))
         );
+
+        return $this->redirect('/admin?routeName=app_admin_validation');
+    }
+
+    #[Route('/admin/validation/rejected/{gasStationId}', name: 'app_admin_validation_rejected')]
+    public function rejected(EntityManagerInterface $em, MessageBusInterface $messageBus, GasStation $gasStation): Response
+    {
+        // if (GasStationStatusReference::WAITING_VALIDATION !== $gasStation->getStatus()) {
+        //     return $this->redirect('/admin?routeName=app_admin_validation');
+        // }
+
+        $gasStation->setStatus(GasStationStatusReference::VALIDATION_REJECTED);
+        $gasStation->getGooglePlace()->setPlaceId(NULL);
+
+        $em->persist($gasStation);
+        $em->flush();
 
         return $this->redirect('/admin?routeName=app_admin_validation');
     }

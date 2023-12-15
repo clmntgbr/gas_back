@@ -68,7 +68,7 @@ class GasStationRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findGasStationsByPlaceId(): array
+    public function findGasStationsByPlaceIdNotNull(): array
     {
         $query = $this->createQueryBuilder('s')
             ->select('s')
@@ -86,7 +86,21 @@ class GasStationRepository extends ServiceEntityRepository
             ->innerJoin('s.googlePlace', 'ss')
             ->where('ss.placeId = :placeId AND s.status = :status')
             ->setParameters(
-               ['status' => $status, 'placeId' => $placeId] 
+                ['status' => $status, 'placeId' => $placeId]
+            )
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findGasStationsByPlaceId(string $placeId): array
+    {
+        $query = $this->createQueryBuilder('s')
+            ->select('s')
+            ->innerJoin('s.googlePlace', 'ss')
+            ->where('ss.placeId = :placeId')
+            ->setParameters(
+                ['placeId' => $placeId]
             )
             ->getQuery();
 
